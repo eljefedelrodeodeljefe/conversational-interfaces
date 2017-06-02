@@ -1,0 +1,18 @@
+{
+  "name": "conversational",
+  "version": "0.1.0",
+  "private": true,
+  "license": "UNLICENSED",
+  "description": "Compare different speech API solutions, including natural language understanding and backend options.",
+  "main": "index.js",
+  "scripts": {
+    "test": "tape 'test/**/*.spec.js'"
+  },
+  "author": "Robert Jefe Lindstaedt <robert.lindstaedt@gmail.com>",
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "debug": "^2.6.8",
+    "nodemon": "^1.11.0",
+    "tape": "^4.6.3"
+  }
+}
