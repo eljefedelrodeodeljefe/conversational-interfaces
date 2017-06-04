@@ -22,7 +22,7 @@ const actions = {
 const didNotUnderstand = 'ich habe dich nicht verstanden'
 
 exports.messages = (text, reply, profile, cb) => {
-  const isAction = actions[text]
+  const isAction = actions[text.toLowerCase().trim()]
 
   if (isAction) {
     return isAction(text, reply, profile, cb)
