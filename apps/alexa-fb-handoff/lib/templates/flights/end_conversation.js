@@ -9,7 +9,9 @@ module.exports = (payload, reply, cb) => {
           {
             'type': 'postback',
             'title': '🕒 Wann muss ich los?',
-            'payload': 'USER_DEFINED_PAYLOAD'
+            'payload': JSON.stringify({
+              action: 'to_airport'
+            })
           },
           {
             'type': 'postback',
@@ -25,7 +27,7 @@ module.exports = (payload, reply, cb) => {
       }
     }
   }
-  reply({ text: 'Du kannst zederzeit das Mediaangebot sehen indem du mich nach Sachen fragst wie\n\n* Magazine\n* Filme\n* Entertainment' }, (err) => {
+  reply({ text: 'Du kannst jederzeit das Mediaangebot sehen indem du mich nach Sachen fragst wie\n\n* Magazine\n* Filme\n* Entertainment' }, (err) => {
     if (err) return cb(err)
 
     setTimeout(() => {
