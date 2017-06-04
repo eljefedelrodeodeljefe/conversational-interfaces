@@ -65,4 +65,8 @@ exports.quickReplies = (payload, reply, cb) => {
   if (payload.action && payload.action === 'checkin_seating') {
     return seat(payload, reply, cb)
   }
+
+  if (payload.action && payload.action === 'preflight_entertainment_choice') {
+    return checkConvenience.continuation(payload, reply, cb)
+  }
 }
