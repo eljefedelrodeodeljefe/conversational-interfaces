@@ -1,0 +1,21 @@
+{
+  "name": "alexa-fb-handoff",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "express": "^4.15.3",
+    "messenger-bot": "^2.4.0",
+    "ngrok": "^2.2.9"
+  },
+  "devDependencies": {
+    "debug": "^2.6.8",
+    "nodemon": "^1.11.0",
+    "tape": "^4.6.3"
+  }
+}
