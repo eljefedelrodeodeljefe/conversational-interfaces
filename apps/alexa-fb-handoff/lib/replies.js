@@ -28,6 +28,8 @@ exports.messages = (text, reply, profile, cb) => {
     return isAction(text, reply, profile, cb)
   }
 
+  debug(text)
+
   reply({ text: didNotUnderstand }, (err) => {
     if (err) return cb(err)
 
@@ -45,6 +47,8 @@ exports.postbacks = (payload, reply, actions, cb) => {
   } catch (e) {
     debug('could not find or parse action')
   }
+
+  debug(payload)
 
   if (action && action === 'automatic_checkin') return checkin(payload, reply, actions, cb)
 
@@ -78,5 +82,11 @@ exports.quickReplies = (payload, reply, cb) => {
 
   if (payload.action && payload.action === 'preflight_entertainment_remind_me_later') {
     return endFlightConvo(payload, reply, cb)
+  }
+}
+
+exports.locations = (payload, reply, cb) => {
+  if (payload.message.attachments[0].payload.coordinates) {
+    return toAirport.continuation(payload, payload.message.attachments[0].payload.coordinates, reply, cb)
   }
 }

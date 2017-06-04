@@ -22,6 +22,16 @@ bot.on('error', (err) => {
 bot.on('message', (payload, reply) => {
   let text = payload.message.text
 
+  debug(payload.message.attachments)
+
+  if (payload.message.attachments && payload.message.attachments[0] && payload.message.attachments[0].type && payload.message.attachments[0].type === 'location') {
+    return handleReplies.locations(payload, reply, (err) => {
+      if (err) return debug('got error in quickreply coversation', err)
+
+      debug('end of quickreply conversation')
+    })
+  }
+
   if (payload.message.quick_reply) {
     return handleReplies.quickReplies(payload, reply, (err) => {
       if (err) return debug('got error in quickreply coversation', err)
