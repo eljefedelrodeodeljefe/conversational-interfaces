@@ -1,5 +1,7 @@
-const getFromTemplate = require('./templates')
+// const getFromTemplate = require('./templates')
 const sendBookingConfirmation = require('./templates/flights/confirmation')
+const checkin = require('./templates/flights/checkin')
+const seat = require('./templates/flights/seat')
 
 const actions = {
   'demodays': (text, reply, profile, cb) => {
@@ -34,13 +36,7 @@ exports.postbacks = (payload, reply, actions, cb) => {
     console.log('could not find or parse action')
   }
 
-  if (action && action === 'automatic_checkin') {
-    reply({ text: 'Wir checken dich autoamtisch für diesen Flug ein.' }, (err, info) => {
-      if (err) return cb(err)
-
-      return cb(null, info)
-    })
-  }
+  if (action && action === 'automatic_checkin') return checkin(payload, reply, actions, cb)
 
   if (action && action === 'add_calendar') {
     reply({ text: 'Das Event wird von unserer App automatisch hinzugefügt' }, (err, info) => {
@@ -48,5 +44,18 @@ exports.postbacks = (payload, reply, actions, cb) => {
 
       return cb(null, info)
     })
+  }
+}
+
+exports.quickReplies = (payload, reply, cb) => {
+  try {
+    payload = JSON.parse(payload.message.quick_reply.payload)
+  } catch (e) {
+    return cb(new Error('Error parsing pyload'))
+  }
+
+  console.log(payload)
+  if (payload.action && payload.action === 'checkin_seating') {
+    return seat(payload, reply, cb)
   }
 }

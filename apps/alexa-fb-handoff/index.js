@@ -22,6 +22,14 @@ bot.on('error', (err) => {
 bot.on('message', (payload, reply) => {
   let text = payload.message.text
 
+  if (payload.message.quick_reply) {
+    return handleReplies.quickReplies(payload, reply, (err) => {
+      if (err) return debug('got error in quickreply coversation', err)
+
+      debug('end of quickreply conversation')
+    })
+  }
+
   bot.getProfile(payload.sender.id, (err, profile) => {
     if (err) throw err
 
