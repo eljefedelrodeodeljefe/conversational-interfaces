@@ -1,6 +1,6 @@
 module.exports = (text, reply, profile, cb) => {
   const message = {
-    'text': `Alles klar, ich checke dich ein, sobal der Check-in offen ist. Hast du einen favorisierten 💺Sitzplatz?`,
+    'text': `Alles klar, ich checke dich ein, sobald der Check-in offen ist. Hast du einen favorisierten 💺Sitzplatz?`,
     'quick_replies': [
       {
         'content_type': 'text',
