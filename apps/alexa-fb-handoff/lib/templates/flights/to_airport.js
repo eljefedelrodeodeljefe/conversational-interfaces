@@ -1,4 +1,4 @@
-exports.inquire = (payload, reply, cb) => {
+exports.inquire = (payload, reply, actions, cb) => {
   const message = {
     'text': `Da helfe ich gerne - dazu müsste ich nur die Straße wissen bei der du startest`
   }
@@ -22,4 +22,8 @@ exports.inquire = (payload, reply, cb) => {
       })
     }, 1500)
   })
+}
+
+exports.continuation = () => {
+
 }
