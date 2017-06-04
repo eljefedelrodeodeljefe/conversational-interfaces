@@ -1,6 +1,7 @@
 const sendBookingConfirmation = require('./templates/flights/confirmation')
 const sendBoardingPass = require('./templates/flights/boardingpass')
 const checkConvenience = require('./templates/flights/convenience')
+const endFlightConvo = require('./templates/flights/end_conversation')
 const checkin = require('./templates/flights/checkin')
 const seat = require('./templates/flights/seat')
 
@@ -68,5 +69,9 @@ exports.quickReplies = (payload, reply, cb) => {
 
   if (payload.action && payload.action === 'preflight_entertainment_choice') {
     return checkConvenience.continuation(payload, reply, cb)
+  }
+
+  if (payload.action && payload.action === 'preflight_entertainment_remind_me_later') {
+    return endFlightConvo(payload, reply, cb)
   }
 }
