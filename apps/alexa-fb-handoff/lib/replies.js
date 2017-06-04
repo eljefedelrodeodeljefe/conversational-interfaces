@@ -2,6 +2,7 @@ const sendBookingConfirmation = require('./templates/flights/confirmation')
 const sendBoardingPass = require('./templates/flights/boardingpass')
 const checkConvenience = require('./templates/flights/convenience')
 const endFlightConvo = require('./templates/flights/end_conversation')
+const toAirport = require('./templates/flights/to_airport')
 const checkin = require('./templates/flights/checkin')
 const seat = require('./templates/flights/seat')
 const debug = require('debug')('fbbot')
@@ -46,6 +47,8 @@ exports.postbacks = (payload, reply, actions, cb) => {
   }
 
   if (action && action === 'automatic_checkin') return checkin(payload, reply, actions, cb)
+
+  if (action && action === 'to_airport') return toAirport.inquire(payload, reply, actions, cb)
 
   if (action && action === 'add_calendar') {
     reply({ text: 'Das Event wird von unserer App automatisch hinzugefügt' }, (err, info) => {
