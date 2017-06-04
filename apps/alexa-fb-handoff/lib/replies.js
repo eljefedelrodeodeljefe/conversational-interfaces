@@ -4,6 +4,7 @@ const checkConvenience = require('./templates/flights/convenience')
 const endFlightConvo = require('./templates/flights/end_conversation')
 const checkin = require('./templates/flights/checkin')
 const seat = require('./templates/flights/seat')
+const debug = require('debug')('fbbot')
 
 const actions = {
   'demodays': (text, reply, profile, cb) => {
@@ -29,7 +30,7 @@ exports.messages = (text, reply, profile, cb) => {
   reply({ text: didNotUnderstand }, (err) => {
     if (err) return cb(err)
 
-    console.log(`Echoed back to ${profile.first_name} ${profile.last_name}: ${text}`)
+    debug(`Echoed back to ${profile.first_name} ${profile.last_name}: ${text}`)
     return cb(null)
   })
 }
@@ -41,7 +42,7 @@ exports.postbacks = (payload, reply, actions, cb) => {
       action = JSON.parse(payload.postback.payload).action
     }
   } catch (e) {
-    console.log('could not find or parse action')
+    debug('could not find or parse action')
   }
 
   if (action && action === 'automatic_checkin') return checkin(payload, reply, actions, cb)
@@ -62,7 +63,8 @@ exports.quickReplies = (payload, reply, cb) => {
     return cb(new Error('Error parsing pyload'))
   }
 
-  console.log(payload)
+  debug(payload)
+
   if (payload.action && payload.action === 'checkin_seating') {
     return seat(payload, reply, cb)
   }
