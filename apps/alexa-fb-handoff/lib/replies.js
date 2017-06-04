@@ -1,6 +1,6 @@
-// const getFromTemplate = require('./templates')
 const sendBookingConfirmation = require('./templates/flights/confirmation')
 const sendBoardingPass = require('./templates/flights/boardingpass')
+const checkConvenience = require('./templates/flights/convenience')
 const checkin = require('./templates/flights/checkin')
 const seat = require('./templates/flights/seat')
 
@@ -10,6 +10,9 @@ const actions = {
   },
   'demoweek': (text, reply, profile, cb) => {
     return sendBoardingPass(text, reply, profile, cb)
+  },
+  'demobeforeflight': (text, reply, profile, cb) => {
+    return checkConvenience.ask(text, reply, profile, cb)
   }
 }
 
