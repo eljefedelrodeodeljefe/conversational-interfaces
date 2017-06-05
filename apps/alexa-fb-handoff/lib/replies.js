@@ -5,6 +5,7 @@ const endFlightConvo = require('./templates/flights/end_conversation')
 const toAirport = require('./templates/flights/to_airport')
 const checkin = require('./templates/flights/checkin')
 const seat = require('./templates/flights/seat')
+const conversation = require('./conversation')
 const debug = require('debug')('fbbot')
 
 const actions = {
@@ -30,10 +31,9 @@ exports.messages = (text, reply, profile, cb) => {
 
   debug(text)
 
-  reply({ text: didNotUnderstand }, (err) => {
+  conversation.handle(text, reply, (err) => {
     if (err) return cb(err)
 
-    debug(`Echoed back to ${profile.first_name} ${profile.last_name}: ${text}`)
     return cb(null)
   })
 }
