@@ -77,6 +77,12 @@ app.post('/webhook', (req, res) => {
   res.end(JSON.stringify({status: 'ok'}))
 })
 
+app.post('/webhooks/fulfillment/ai', (req, res) => {
+  debug('got fulfillment')
+  debug(req.body)
+  return res.status(200).send()
+})
+
 http.createServer(app).listen(PORT, () => {
   debug('Echo bot server running at port 3000.')
 })
