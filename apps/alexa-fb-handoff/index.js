@@ -83,6 +83,12 @@ app.post('/webhooks/fulfillment/ai', (req, res) => {
   return res.status(200).send()
 })
 
+app.post('/webhooks/speech/alexa', (req, res) => {
+  debug('got alexa')
+  debug(req.body)
+  return res.status(200).send()
+})
+
 http.createServer(app).listen(PORT, () => {
   debug('Echo bot server running at port 3000.')
 })
