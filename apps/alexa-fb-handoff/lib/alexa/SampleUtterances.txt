@@ -1,0 +1,63 @@
+CheckIn	automatischer check-in
+CheckIn	automatischer checkin
+CheckIn	check mich automatisch ein
+CheckIn	check mich vorher ein
+FlightListNextAll	nenne mir alle flüge
+FlightListNextAll	nenne mir alle flüge in nächster zeit
+FlightListNextAll	sind meine nächsten flüge
+FlightListNextAll	sind meine nächsten flüge?
+FlightListNextAll	welche flüge ich als nächstes
+FlightListNextOne	wann habe ich meinen nächsten flug
+FlightListNextOne	wann habe ich meinen nächsten flug?
+FlightListNextOne	welcher ist mein nächste flug
+FlightListNextOne	welcher ist mein nächste flug?
+SmalltalkGreetingsHow_are_you	alles klar bei dir
+SmalltalkGreetingsHow_are_you	ist alles gut
+SmalltalkGreetingsHow_are_you	ist alles im lack
+SmalltalkGreetingsHow_are_you	ist alles in ordnung
+SmalltalkGreetingsHow_are_you	ist alles klar bei dir
+SmalltalkGreetingsHow_are_you	wie geht es dir
+SmalltalkGreetingsHow_are_you	wie geht es ihnen
+SmalltalkGreetingsHow_are_you	wie geht s
+SmalltalkGreetingsHow_are_you	wie geht s dir
+SmalltalkGreetingsHow_are_you	wie geht s dir so
+SmalltalkGreetingsHow_are_you	wie geht's
+SmalltalkGreetingsHow_are_you	wie geht's dir
+SmalltalkGreetingsHow_are_you	wie geht's dir so
+SmalltalkGreetingsHow_are_you	wie sieht s aus
+SmalltalkGreetingsHow_are_you	wie sieht's aus
+SmalltalkGreetingsHello	grüß dich
+SmalltalkGreetingsHello	halli hallo
+SmalltalkGreetingsHello	hallo
+SmalltalkGreetingsHello	hallo hallo
+SmalltalkGreetingsHello	hallo schatz
+SmalltalkGreetingsHello	hallo schatzi
+SmalltalkGreetingsHello	hallöchen
+SmalltalkGreetingsHello	hey du
+SmalltalkGreetingsHello	ich grüße dich
+SmalltalkGreetingsHello	ja hallo
+SmalltalkAgentChatbot	bist du automatisch
+SmalltalkAgentChatbot	bist du ein mensch oder eine maschine
+SmalltalkAgentChatbot	bist du ein roboter
+SmalltalkAgentChatbot	bist du eine menschliche maschine
+SmalltalkAgentChatbot	bist du künstlich
+SmalltalkAgentChatbot	bist du künstlich oder mesnchlich
+SmalltalkAgentChatbot	bist du roboter oder nicht
+SmalltalkAgentChatbot	du bist bot
+SmalltalkAgentChatbot	du bist chatbot
+SmalltalkAgentChatbot	du bist ein apparat
+SmalltalkAgentChatbot	du bist eine maschine
+SmalltalkAgentChatbot	du bist kein mensch
+SmalltalkAgentChatbot	du bist mehr robot als mensch
+SmalltalkAgentChatbot	du bist mehr wie ein roboter
+SmalltalkAgentChatbot	du bist nicht anderes als eine maschine
+SmalltalkAgentChatbot	du bist nicht menschlich
+SmalltalkAgentChatbot	du bist nur bot
+SmalltalkAgentChatbot	du bist nur chatbot
+SmalltalkAgentChatbot	du bist nur ein roboter
+SmalltalkAgentChatbot	du bist roboter
+SmalltalkAgentChatbot	du klingst wie ein roboter
+SmalltalkAgentChatbot	ich denke du bist ein roboter
+SmalltalkAgentChatbot	mensch bist du nicht oder
+SmalltalkAgentChatbot	rede ich mit einer maschine
+SmalltalkAgentChatbot	rede ich mit einer maschine oder einem roboter

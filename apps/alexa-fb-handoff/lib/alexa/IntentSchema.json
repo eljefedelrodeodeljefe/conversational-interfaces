@@ -1,0 +1,22 @@
+{
+  "intents": [
+    {
+      "intent": "CheckIn"
+    },
+    {
+      "intent": "FlightListNextAll"
+    },
+    {
+      "intent": "FlightListNextOne"
+    },
+    {
+      "intent": "SmalltalkGreetingsHow_are_you"
+    },
+    {
+      "intent": "SmalltalkGreetingsHello"
+    },
+    {
+      "intent": "SmalltalkAgentChatbot"
+    }
+  ]
+}
