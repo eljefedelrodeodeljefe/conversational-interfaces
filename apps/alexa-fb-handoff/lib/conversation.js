@@ -13,21 +13,21 @@ exports.handle = (text, reply, cb) => {
   apiaiRequest.on('response', (response) => {
     debug(response)
 
-    if (!hasCalled) {
-      hasCalled = true
-      reply({ text: response.result.fulfillment.speech }, (err) => {
-        if (err) return cb(err)
+    if (hasCalled) return
 
-        return cb(null, response)
-      })
-    }
+    hasCalled = true
+    reply({ text: response.result.fulfillment.speech }, (err) => {
+      if (err) return cb(err)
+
+      return cb(null, response)
+    })
   })
 
   apiaiRequest.on('error', (err) => {
-    if (!hasCalled) {
-      hasCalled = true
-      return cb(err)
-    }
+    if (hasCalled) return
+
+    hasCalled = true
+    return cb(err)
   })
 
   apiaiRequest.end()
