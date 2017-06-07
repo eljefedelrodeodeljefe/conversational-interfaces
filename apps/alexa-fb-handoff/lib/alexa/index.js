@@ -3,8 +3,65 @@
 'use strict'
 
 const Alexa = require('alexa-sdk')
+const http = require('https')
 
 const APP_ID = 'amzn1.ask.skill.e41b76b7-49bf-4370-854c-17202734bb08'
+
+function postWebhook (host, payload, cb) {
+  let hasCalled = false
+  const options = {
+    'method': 'POST',
+    'hostname': host || 'happy-travel.eu.ngrok.io',
+    'port': null,
+    'path': '/webhooks/self',
+    'headers': {
+      'content-type': 'application/json',
+      'cache-control': 'no-cache'
+    }
+  }
+
+  const req = http.request(options, (res) => {
+    const chunks = []
+
+    res.on('data', (chunk) => {
+      chunks.push(chunk)
+    })
+
+    res.on('error', (err) => {
+      if (hasCalled) return
+      hasCalled = true
+      return cb(err)
+    })
+
+    res.on('end', () => {
+      if (hasCalled) return
+      hasCalled = true
+      let body = Buffer.concat(chunks).toString()
+
+      if (body) {
+        try {
+          body = JSON.parse(body)
+        } catch (e) {
+           // ignore
+        }
+      }
+
+      return cb(null, res.statusCode, body)
+    })
+  })
+
+  if (payload) {
+    req.write(payload)
+  }
+
+  req.on('error', (err) => {
+    if (hasCalled) return
+    hasCalled = true
+    return cb(err)
+  })
+
+  req.end()
+}
 
 function getMockedDate (offset) {
   let mockdate = new Date()
@@ -26,7 +83,8 @@ const languageStrings = {
       HELP_MESSAGE: 'Du kannst sagen, „Nenne mir einen Fakt über den Weltraum“, oder du kannst „Beenden“ sagen... Wie kann ich dir helfen?',
       HELP_REPROMPT: 'Wie kann ich dir helfen?',
       MY_FEELING: 'Gut.',
-      STOP_MESSAGE: 'Auf Wiedersehen!'
+      STOP_MESSAGE: 'Auf Wiedersehen!',
+      HAPPYTRAVEL_API_ERROR: 'Ich konnte Happy Travel nicht erreichen. Versuche es bitte später noch einmal.'
     }
   }
 }
@@ -52,7 +110,15 @@ const handlers = {
     }
 
     const speechOutput = this.t('ON_CODE') + codes.join(', ')
-    this.emit(':tell', speechOutput)
+    const payload = JSON.stringify({ name: null, code: codes.join('').toUpperCase() })
+    postWebhook(null, payload, (err) => {
+      if (err) {
+        this.emit(':tell', this.t('HAPPYTRAVEL_API_ERROR'))
+        return
+      }
+
+      this.emit(':tell', speechOutput)
+    })
   },
   'FlightListNextAll': function () {
     const speechOutput = `Dein nächsten Flüge sind:${this.t('FLIGHTS').map((el, index, array) => {

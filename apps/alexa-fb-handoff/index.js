@@ -94,6 +94,15 @@ app.post('/webhooks/speech/alexa', (req, res) => {
   // return res.status(200).send()
 })
 
+app.post('/webhooks/self', (req, res) => {
+  debug('got self')
+  debug(req.body)
+  return res.json({
+    status: 'ok'
+  })
+  // return res.status(200).send()
+})
+
 http.createServer(app).listen(PORT, () => {
   debug('Echo bot server running at port 3000.')
 })
