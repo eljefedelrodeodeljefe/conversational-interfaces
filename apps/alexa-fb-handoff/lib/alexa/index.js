@@ -83,6 +83,8 @@ const languageStrings = {
       HELP_MESSAGE: 'Du kannst sagen, „Nenne mir einen Fakt über den Weltraum“, oder du kannst „Beenden“ sagen... Wie kann ich dir helfen?',
       HELP_REPROMPT: 'Wie kann ich dir helfen?',
       MY_FEELING: 'Gut.',
+      PROMPT_AUTOMATIC_CHECKIN_CONTINUATION: 'Soll ich dich versuchen automatisch zum frühst möglichen Zeitpunkt einzuchecken?',
+      REPROMPT: 'Bitte sage das noch einmal.',
       STOP_MESSAGE: 'Auf Wiedersehen!',
       HAPPYTRAVEL_API_ERROR: 'Ich konnte Happy Travel nicht erreichen. Versuche es bitte später noch einmal.'
     }
@@ -117,8 +119,14 @@ const handlers = {
         return
       }
 
-      this.emit(':tell', speechOutput)
+      this.emit(':ask', speechOutput + ' ' + this.t('PROMPT_AUTOMATIC_CHECKIN_CONTINUATION'), this.t('REPROMPT'))
     })
+  },
+  'AMAZON.NoIntent': function () {
+    this.emit(':tell', 'Ok, bis zum nästen mal')
+  },
+  'AMAZON.YesIntent': function () {
+    this.emit(':tell', 'Ok, danke.')
   },
   'FlightListNextAll': function () {
     const speechOutput = `Dein nächsten Flüge sind:${this.t('FLIGHTS').map((el, index, array) => {

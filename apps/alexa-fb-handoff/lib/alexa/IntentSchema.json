@@ -4,6 +4,12 @@
       "intent": "CheckIn"
     },
     {
+      "intent": "AMAZON.NoIntent"
+    },
+    {
+      "intent": "AMAZON.YesIntent"
+    },
+    {
       "intent": "FlightEnterBookingcode",
       "slots": [
         {
