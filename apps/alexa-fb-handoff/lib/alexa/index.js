@@ -6,15 +6,18 @@ const Alexa = require('alexa-sdk')
 
 const APP_ID = 'amzn1.ask.skill.e41b76b7-49bf-4370-854c-17202734bb08'
 
-let mockdate = new Date()
-mockdate.setDate(mockdate.getDate() + 2)
-mockdate = `${mockdate.getDate()}.${mockdate.getMonth() + 1}.${mockdate.getFullYear()}`
+function getMockedDate (offset) {
+  let mockdate = new Date()
+  mockdate.setDate(mockdate.getDate() + offset)
+  return `${mockdate.getDate()}.${mockdate.getMonth() + 1}.${mockdate.getFullYear()}`
+}
 
 const languageStrings = {
   'de': {
     translation: {
       FLIGHTS: [
-        { from: 'Berlin', to: 'Paris', date: mockdate }
+        { from: 'Berlin', to: 'Paris', date: getMockedDate(2) },
+        { from: 'Paris', to: 'Berlin', date: getMockedDate(3) }
       ],
       SKILL_NAME: 'Weltraumwissen auf Deutsch',
       ON_CODE: 'Dein Code ist...',
@@ -42,6 +45,15 @@ const handlers = {
   },
   'FlightEnterBookingcode': function () {
     const speechOutput = this.t('ON_CODE')
+    this.emit(':tell', speechOutput)
+  },
+  'FlightListNextAll': function () {
+    const speechOutput = `Dein nächsten Flüge sind:${this.t('FLIGHTS').map((el, index, array) => {
+      let and = ''
+      if (index === 0 && array.length > 0) and = ' und '
+
+      return `${el.from} nach ${el.to} am ${el.date}${and}`
+    })}`
     this.emit(':tell', speechOutput)
   },
   'FlightListNextOne': function () {
