@@ -58,6 +58,10 @@ const handlers = {
   },
   'AMAZON.StopIntent': function () {
     this.emit(':tell', this.t('STOP_MESSAGE'))
+  },
+  'Unhandled': function () {
+    var message = 'Say yes to continue, or no to end the game.'
+    this.emit(':tell', message)
   }
 }
 
