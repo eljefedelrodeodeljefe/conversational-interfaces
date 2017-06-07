@@ -66,9 +66,12 @@ const handlers = {
     this.emit(':ask', speechOutput, reprompt)
   },
   'AMAZON.CancelIntent': function () {
-    this.emit(':tell', this.t('STOP_MESSAGE'))
+    this.emit('SessionEndedRequest')
   },
   'AMAZON.StopIntent': function () {
+    this.emit('SessionEndedRequest')
+  },
+  'SessionEndedRequest': function () {
     this.emit(':tell', this.t('STOP_MESSAGE'))
   },
   'Unhandled': function () {
