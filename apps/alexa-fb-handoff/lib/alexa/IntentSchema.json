@@ -4,6 +4,35 @@
       "intent": "CheckIn"
     },
     {
+      "intent": "FlightEnterBookingcode",
+      "slots": [
+        {
+          "name": "letter_a",
+          "type": "LETTER_OR_NUMBER"
+        },
+        {
+          "name": "letter_b",
+          "type": "LETTER_OR_NUMBER"
+        },
+        {
+          "name": "letter_c",
+          "type": "LETTER_OR_NUMBER"
+        },
+        {
+          "name": "letter_d",
+          "type": "LETTER_OR_NUMBER"
+        },
+        {
+          "name": "letter_e",
+          "type": "LETTER_OR_NUMBER"
+        },
+        {
+          "name": "letter_f",
+          "type": "LETTER_OR_NUMBER"
+        }
+      ]
+    },
+    {
       "intent": "FlightListNextAll"
     },
     {

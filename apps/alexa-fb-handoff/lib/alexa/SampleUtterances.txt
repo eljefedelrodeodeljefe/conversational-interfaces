@@ -2,15 +2,16 @@ CheckIn	automatischer check-in
 CheckIn	automatischer checkin
 CheckIn	check mich automatisch ein
 CheckIn	check mich vorher ein
+FlightEnterBookingcode mein code ist {letter_a} {letter_b} {letter_c} {letter_d} {letter_e} {letter_f}
 FlightListNextAll	nenne mir alle flüge
 FlightListNextAll	nenne mir alle flüge in nächster zeit
 FlightListNextAll	sind meine nächsten flüge
-FlightListNextAll	sind meine nächsten flüge?
+FlightListNextAll	sind meine nächsten flüge
 FlightListNextAll	welche flüge ich als nächstes
 FlightListNextOne	wann habe ich meinen nächsten flug
-FlightListNextOne	wann habe ich meinen nächsten flug?
+FlightListNextOne	wann habe ich meinen nächsten flug
 FlightListNextOne	welcher ist mein nächste flug
-FlightListNextOne	welcher ist mein nächste flug?
+FlightListNextOne	welcher ist mein nächste flug
 SmalltalkGreetingsHow_are_you	alles klar bei dir
 SmalltalkGreetingsHow_are_you	ist alles gut
 SmalltalkGreetingsHow_are_you	ist alles im lack

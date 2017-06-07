@@ -17,6 +17,7 @@ const languageStrings = {
         { from: 'Berlin', to: 'Paris', date: mockdate }
       ],
       SKILL_NAME: 'Weltraumwissen auf Deutsch',
+      ON_CODE: 'Dein Code ist...',
       WELCOME: 'Hallo. Wie kann ich dir mit Flügen weiterhelfen?',
       HELP_MESSAGE: 'Du kannst sagen, „Nenne mir einen Fakt über den Weltraum“, oder du kannst „Beenden“ sagen... Wie kann ich dir helfen?',
       HELP_REPROMPT: 'Wie kann ich dir helfen?',
@@ -31,6 +32,10 @@ const handlers = {
   },
   'SmalltalkGreetingsHello': function () {
     const speechOutput = this.t('WELCOME')
+    this.emit(':tell', speechOutput)
+  },
+  'FlightEnterBookingcode': function () {
+    const speechOutput = this.t('ON_CODE')
     this.emit(':tell', speechOutput)
   },
   'FlightListNextOne': function () {
