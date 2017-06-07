@@ -5,6 +5,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const Bot = require('messenger-bot')
 const handleReplies = require('./lib/replies')
+const alexa = require('./lib/alexa')
 const config = require('./config')
 
 const PORT = 3000
@@ -83,10 +84,14 @@ app.post('/webhooks/fulfillment/ai', (req, res) => {
   return res.status(200).send()
 })
 
+// arn:aws:lambda:eu-west-1:328821723060:function:happy-travel-2
+// or
+// https://happy-travel.eu.ngrok.io/webhooks/speech/alexa
 app.post('/webhooks/speech/alexa', (req, res) => {
   debug('got alexa')
   debug(req.body)
-  return res.status(200).send()
+  return alexa.handler(req.body.request, null)
+  // return res.status(200).send()
 })
 
 http.createServer(app).listen(PORT, () => {
