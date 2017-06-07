@@ -20,7 +20,7 @@ const languageStrings = {
         { from: 'Paris', to: 'Berlin', date: getMockedDate(3) }
       ],
       SKILL_NAME: 'Weltraumwissen auf Deutsch',
-      ON_CODE: 'Dein Code ist...',
+      ON_CODE: 'Dein Code ist:',
       WELCOME: 'Hallo. Wie kann ich dir mit Flügen weiterhelfen?',
       GETTING_STARTED: 'Wie kann ich dir mit Flügen weiterhelfen?',
       HELP_MESSAGE: 'Du kannst sagen, „Nenne mir einen Fakt über den Weltraum“, oder du kannst „Beenden“ sagen... Wie kann ich dir helfen?',
@@ -44,7 +44,14 @@ const handlers = {
     this.emit(':tell', speechOutput)
   },
   'FlightEnterBookingcode': function () {
-    const speechOutput = this.t('ON_CODE')
+    const codes = []
+    for (var el in this.event.request.intent.slots) {
+      if (this.event.request.intent.slots.hasOwnProperty(el)) {
+        codes.push(this.event.request.intent.slots[el].value)
+      }
+    }
+
+    const speechOutput = this.t('ON_CODE') + codes.join(', ')
     this.emit(':tell', speechOutput)
   },
   'FlightListNextAll': function () {
