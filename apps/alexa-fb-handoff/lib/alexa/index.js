@@ -19,8 +19,10 @@ const languageStrings = {
       SKILL_NAME: 'Weltraumwissen auf Deutsch',
       ON_CODE: 'Dein Code ist...',
       WELCOME: 'Hallo. Wie kann ich dir mit Flügen weiterhelfen?',
+      GETTING_STARTED: 'Wie kann ich dir mit Flügen weiterhelfen?',
       HELP_MESSAGE: 'Du kannst sagen, „Nenne mir einen Fakt über den Weltraum“, oder du kannst „Beenden“ sagen... Wie kann ich dir helfen?',
       HELP_REPROMPT: 'Wie kann ich dir helfen?',
+      MY_FEELING: 'Gut.',
       STOP_MESSAGE: 'Auf Wiedersehen!'
     }
   }
@@ -32,6 +34,10 @@ const handlers = {
   },
   'SmalltalkGreetingsHello': function () {
     const speechOutput = this.t('WELCOME')
+    this.emit(':tell', speechOutput)
+  },
+  'SmalltalkGreetingsHow_are_you': function () {
+    const speechOutput = this.t('MY_FEELING') + ' ' + this.t('GETTING_STARTED')
     this.emit(':tell', speechOutput)
   },
   'FlightEnterBookingcode': function () {
