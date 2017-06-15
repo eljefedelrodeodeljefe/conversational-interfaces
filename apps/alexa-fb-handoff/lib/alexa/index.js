@@ -7,13 +7,13 @@ const http = require('https')
 
 const APP_ID = 'amzn1.ask.skill.e41b76b7-49bf-4370-854c-17202734bb08'
 
-function postWebhook (host, payload, cb) {
+function postWebhook (host, path, payload, cb) {
   let hasCalled = false
   const options = {
     'method': 'POST',
     'hostname': host || 'happy-travel.eu.ngrok.io',
     'port': null,
-    'path': '/webhooks/self',
+    'path': `/webhooks/${path || 'self'}`,
     'headers': {
       'content-type': 'application/json',
       'cache-control': 'no-cache'
@@ -109,7 +109,7 @@ const handlers = {
     const speechOutput = this.t('WELCOME')
     // some pre action
     const payload = JSON.stringify({ type: 'new_session' })
-    postWebhook(null, payload, (err) => {
+    postWebhook(null, null, payload, (err) => {
       if (err) {
         return
       }
@@ -132,7 +132,7 @@ const handlers = {
 
     const speechOutput = this.t('ON_CODE') + codes.join(', ')
     const payload = JSON.stringify({ name: null, code: codes.join('').toUpperCase() })
-    postWebhook(null, payload, (err) => {
+    postWebhook(null, null, payload, (err) => {
       if (err) {
         this.emit(':tell', this.t('HAPPYTRAVEL_API_ERROR'))
         return
@@ -220,8 +220,8 @@ var notificationHandlers = Alexa.CreateStateHandler(states.NOTIFICATIONS, {
     this.emit('NewSession') // Uses the handler in newSessionHandlers
   },
   'AMAZON.YesIntent': function () {
-    const payload = JSON.stringify({ user: null })
-    postWebhook(null, payload, (err) => {
+    const payload = JSON.stringify({ user: '1517751254964343' })
+    postWebhook(null, 'notifications/facebook', payload, (err) => {
       if (err) {
         return
       }
@@ -247,8 +247,14 @@ var notificationHandlers = Alexa.CreateStateHandler(states.NOTIFICATIONS, {
     this.emit(':tell', this.t('STOP_MESSAGE'))
   },
   'Unhandled': function () {
-    var message = 'Ich habe dich leider nicht verstanden.'
-    this.emit(':tell', message)
+    const payload = JSON.stringify({ user: '1517751254964343' })
+    postWebhook(null, 'notifications/facebook', payload, (err) => {
+      if (err) {
+        return
+      }
+
+      this.emit(':tell', 'Okay. Wir sehen uns bei Facebook. Auch da kannst du mit mir reden.')
+    })
   }
 })
 

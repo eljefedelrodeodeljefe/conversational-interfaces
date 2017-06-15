@@ -1,5 +1,5 @@
-module.exports = (text, reply, profile, cb) => {
-  const message = {
+function getMessage (profile) {
+  return {
     'attachment': {
       'type': 'template',
       'payload': {
@@ -66,7 +66,10 @@ module.exports = (text, reply, profile, cb) => {
       }
     }
   }
+}
 
+module.exports = (text, reply, profile, cb) => {
+  const message = getMessage(profile)
   reply(message, (err) => {
     if (err) return cb(err)
 
@@ -74,3 +77,5 @@ module.exports = (text, reply, profile, cb) => {
     return cb(null)
   })
 }
+
+module.exports.getMessage = getMessage

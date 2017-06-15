@@ -5,6 +5,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const Bot = require('messenger-bot')
 const handleReplies = require('./lib/replies')
+const getBoardingPassMessage = require('./lib/templates/flights/boardingpass').getMessage
 const alexa = require('./lib/alexa')
 const config = require('./config')
 const tunnel = require('./lib/tunnel')
@@ -47,6 +48,8 @@ bot.on('message', (payload, reply) => {
       debug('end of quickreply conversation')
     })
   }
+
+  debug('user', payload.sender.id)
 
   bot.getProfile(payload.sender.id, (err, profile) => {
     if (err) throw err
@@ -107,7 +110,31 @@ app.post('/webhooks/self', (req, res) => {
   return res.json({
     status: 'ok'
   })
-  // return res.status(200).send()
+})
+
+app.post('/webhooks/notifications/facebook', (req, res) => {
+  debug('got facebook notif')
+  debug(req.body)
+
+  bot.getProfile(req.body.user, (err, profile) => {
+    if (err) {
+      debug(err)
+      return res.status(400).send()
+    }
+
+    const message = getBoardingPassMessage(profile)
+
+    bot.sendMessage(req.body.user, message, (err) => {
+      if (err) {
+        debug(err)
+        return res.status(400).send()
+      }
+
+      return res.json({
+        status: 'ok'
+      })
+    })
+  })
 })
 
 http.createServer(app).listen(PORT, () => {
