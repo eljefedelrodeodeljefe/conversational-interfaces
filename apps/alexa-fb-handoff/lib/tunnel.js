@@ -13,8 +13,8 @@ exports.connect = (cb) => {
     // auth: 'user:pwd', // http basic authentication for tunnel
     subdomain: 'happy-travel',
     authtoken: config.ngrok_token, // your authtoken from ngrok.com
-    region: 'eu', // one of ngrok regions (us, eu, au, ap), defaults to us,
-    configPath: './ngrok.yml' // custom path for ngrok config file
+    region: 'eu' // one of ngrok regions (us, eu, au, ap), defaults to us,
+    // configPath: './ngrok.yml' // custom path for ngrok config file
   }, (err, url) => {
     console.log(url)
     if (err) {
