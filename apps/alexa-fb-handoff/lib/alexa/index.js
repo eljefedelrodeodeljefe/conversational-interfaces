@@ -81,13 +81,15 @@ const languageStrings = {
       WELCOME: 'Hallo. Wie kann ich dir mit Flügen weiterhelfen?',
       WELCOME_REPROMT: 'Kann ich dir mit etwas zu Flügen weiterhelfen?',
       GETTING_STARTED: 'Wie kann ich dir mit Flügen weiterhelfen?',
+      FLIGHTS_FURTHER_ACTION: 'Soll ich dich für einenn dieser Flüge automatisch einchecken?',
       HELP_MESSAGE: 'Du kannst sagen, „Nenne mir einen Fakt über den Weltraum“, oder du kannst „Beenden“ sagen... Wie kann ich dir helfen?',
       HELP_REPROMPT: 'Wie kann ich dir helfen?',
       MY_FEELING: 'Gut.',
       PROMPT_AUTOMATIC_CHECKIN_CONTINUATION: 'Soll ich dich versuchen automatisch zum frühst möglichen Zeitpunkt einzuchecken?',
       REPROMPT: 'Bitte sage das noch einmal.',
       STOP_MESSAGE: 'Auf Wiedersehen!',
-      HAPPYTRAVEL_API_ERROR: 'Ich konnte Happy Travel nicht erreichen. Versuche es bitte später noch einmal.'
+      HAPPYTRAVEL_API_ERROR: 'Ich konnte Happy Travel nicht erreichen. Versuche es bitte später noch einmal.',
+      CALL_ME: 'Melde dich gerne bei mir...'
     }
   }
 }
@@ -136,7 +138,7 @@ const handlers = {
 
       return `${el.from} nach ${el.to} am ${el.date}${and}`
     })}`
-    this.emit(':tell', speechOutput)
+    this.emit(':ask', `${speechOutput} ${this.t('FLIGHTS_FURTHER_ACTION')}`, this.t('CALL_ME'))
   },
   'FlightListNextOne': function () {
     const speechOutput = `Dein nächster Flug ist von ${this.t('FLIGHTS')[0].from} nach ${this.t('FLIGHTS')[0].to} am ${this.t('FLIGHTS')[0].date}`
