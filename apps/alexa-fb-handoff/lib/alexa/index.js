@@ -100,7 +100,15 @@ const handlers = {
   },
   'SmalltalkGreetingsHello': function () {
     const speechOutput = this.t('WELCOME')
-    this.emit(':ask', speechOutput, this.t('WELCOME_REPROMT'))
+    // some pre action
+    const payload = JSON.stringify({ type: 'new_session' })
+    postWebhook(null, payload, (err) => {
+      if (err) {
+        return
+      }
+
+      this.emit(':ask', speechOutput, this.t('WELCOME_REPROMT'))
+    })
   },
   'SmalltalkGreetingsHow_are_you': function () {
     const speechOutput = this.t('MY_FEELING') + ' ' + this.t('GETTING_STARTED')
