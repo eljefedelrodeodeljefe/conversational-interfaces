@@ -1,0 +1,19 @@
+{
+    "productId":"my_device",
+    "dsn":"amzn1.application-oa2-client.f35854d5f9b84ae89b1ac82fc22ebd70",
+    "provisioningMethod":"companionService",
+    "wakeWordAgentEnabled":false,
+    "locale":"en-US",
+    "companionApp":{
+        "localPort":8443,
+        "sslKeyStore":"/Users/jefe/repos/mck/knowledge/speech-apis-e2e-comparison/apis/alexa-avs-sample-app/samples/javaclient/certs/server/jetty.pkcs12",
+        "sslKeyStorePassphrase":"123456",
+        "lwaUrl":"https://api.amazon.com"
+    },
+    "companionService":{
+        "serviceUrl":"https://localhost:3000",
+        "sslClientKeyStore":"/Users/jefe/repos/mck/knowledge/speech-apis-e2e-comparison/apis/alexa-avs-sample-app/samples/javaclient/certs/client/client.pkcs12",
+        "sslClientKeyStorePassphrase":"123456",
+        "sslCaCert":"/Users/jefe/repos/mck/knowledge/speech-apis-e2e-comparison/apis/alexa-avs-sample-app/samples/javaclient/certs/ca/ca.crt"
+    }
+}
