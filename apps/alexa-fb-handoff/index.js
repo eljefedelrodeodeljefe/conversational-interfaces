@@ -7,6 +7,7 @@ const Bot = require('messenger-bot')
 const handleReplies = require('./lib/replies')
 const alexa = require('./lib/alexa')
 const config = require('./config')
+const tunnel = require('./lib/tunnel')
 
 const PORT = 3000
 
@@ -14,6 +15,10 @@ let bot = new Bot({
   token: config.fb.token,
   verify: config.fb.verify_token,
   app_secret: config.fb.app_secret
+})
+
+tunnel.connect(() => {
+  debug('tunnel running')
 })
 
 bot.on('error', (err) => {
