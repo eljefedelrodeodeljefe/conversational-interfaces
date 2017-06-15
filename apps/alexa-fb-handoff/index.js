@@ -17,9 +17,11 @@ let bot = new Bot({
   app_secret: config.fb.app_secret
 })
 
-tunnel.connect(() => {
-  debug('tunnel running')
-})
+if (process.env.NO_TUNNEL !== 'true') {
+  tunnel.connect(() => {
+    debug('tunnel running')
+  })
+}
 
 bot.on('error', (err) => {
   debug(err.message)
