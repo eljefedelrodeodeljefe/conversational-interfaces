@@ -1,0 +1,16 @@
+{
+  "name": "google-assistant-example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "google-assistant": "git+https://git@github.com/eljefedelrodeodeljefe/google-assistant.git",
+    "node-record-lpcm16": "^0.3.0",
+    "speaker": "^0.3.0"
+  }
+}

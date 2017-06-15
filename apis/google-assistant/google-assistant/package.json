@@ -1,0 +1,95 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "google-assistant@git+https://git@github.com/eljefedelrodeodeljefe/google-assistant.git",
+        "scope": null,
+        "escapedName": "google-assistant",
+        "name": "google-assistant",
+        "rawSpec": "git+https://git@github.com/eljefedelrodeodeljefe/google-assistant.git",
+        "spec": "git+https://git@github.com/eljefedelrodeodeljefe/google-assistant.git",
+        "type": "hosted",
+        "hosted": {
+          "type": "github",
+          "ssh": "git@github.com:eljefedelrodeodeljefe/google-assistant.git",
+          "sshUrl": "git+ssh://git@github.com/eljefedelrodeodeljefe/google-assistant.git",
+          "httpsUrl": "git+https://git@github.com/eljefedelrodeodeljefe/google-assistant.git",
+          "gitUrl": "git://git@github.com/eljefedelrodeodeljefe/google-assistant.git",
+          "shortcut": "github:eljefedelrodeodeljefe/google-assistant",
+          "directUrl": "https://git@raw.githubusercontent.com/eljefedelrodeodeljefe/google-assistant/master/package.json"
+        }
+      },
+      "/Users/jefe/repos/mck/knowledge/speech-apis-e2e-comparison/apis/google-assistant"
+    ]
+  ],
+  "_from": "git+https://git@github.com/eljefedelrodeodeljefe/google-assistant.git",
+  "_id": "google-assistant@0.1.3",
+  "_inCache": true,
+  "_location": "/google-assistant",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "google-assistant@git+https://git@github.com/eljefedelrodeodeljefe/google-assistant.git",
+    "scope": null,
+    "escapedName": "google-assistant",
+    "name": "google-assistant",
+    "rawSpec": "git+https://git@github.com/eljefedelrodeodeljefe/google-assistant.git",
+    "spec": "git+https://git@github.com/eljefedelrodeodeljefe/google-assistant.git",
+    "type": "hosted",
+    "hosted": {
+      "type": "github",
+      "ssh": "git@github.com:eljefedelrodeodeljefe/google-assistant.git",
+      "sshUrl": "git+ssh://git@github.com/eljefedelrodeodeljefe/google-assistant.git",
+      "httpsUrl": "git+https://git@github.com/eljefedelrodeodeljefe/google-assistant.git",
+      "gitUrl": "git://git@github.com/eljefedelrodeodeljefe/google-assistant.git",
+      "shortcut": "github:eljefedelrodeodeljefe/google-assistant",
+      "directUrl": "https://git@raw.githubusercontent.com/eljefedelrodeodeljefe/google-assistant/master/package.json"
+    }
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "git+https://git@github.com/eljefedelrodeodeljefe/google-assistant.git#f1281a3fc4a93787275fa6bec00e994934d869e0",
+  "_shasum": "9344291f65367c97621137561fc1287e6ec71b24",
+  "_shrinkwrap": null,
+  "_spec": "google-assistant@git+https://git@github.com/eljefedelrodeodeljefe/google-assistant.git",
+  "_where": "/Users/jefe/repos/mck/knowledge/speech-apis-e2e-comparison/apis/google-assistant",
+  "author": {
+    "name": "Scott Ysebert",
+    "email": "endoplasmic@gmail.com"
+  },
+  "bugs": {
+    "url": "https://github.com/endoplasmic/google-assistant/issues"
+  },
+  "dependencies": {
+    "google-auth-library": "^0.10.0",
+    "google-protobuf": "^3.3.0",
+    "grpc": "^1.3.2",
+    "mkdirp": "^0.5.1",
+    "opn": "^5.0.0",
+    "readline": "^1.3.0"
+  },
+  "description": "gRPC wrapper for the Google Assistant",
+  "devDependencies": {
+    "node-record-lpcm16": "^0.3.0",
+    "speaker": "^0.3.0"
+  },
+  "gitHead": "f1281a3fc4a93787275fa6bec00e994934d869e0",
+  "homepage": "https://github.com/endoplasmic/google-assistant#readme",
+  "keywords": [
+    "google assistant"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "name": "google-assistant",
+  "optionalDependencies": {},
+  "readme": "# The Google Assistant SDK\nA version in node to play around with! I've abstracted it from needing to use the mic and speakers on the device running the code (but it still can!) so that you can pass audio in and play audio back however you want to.\n\n## Installation\n```bash\n$ npm install google-assistant\n```\nYou should also [follow the instructions][oauth] to create your OAuth2 JSON file.\n\n## Usage\n```js\nconst GoogleAssistant = require('google-assistant');\nconst config = {\n  auth: {\n    keyFilePath: 'YOUR_API_KEY_FILE_PATH.json',\n    savedTokensPath: 'SOME_PATH/tokens.js', // where you want the tokens to be saved (will create the directory if not already there)\n  },\n};\nconst assistant = new GoogleAssistant(config);\n\n// will start a conversation and wait for audio data\nassistant.on('ready', () => assistant.start());\n```\n\n## Examples\nCheck out the [mic-speaker](examples/mic-speaker.js) example if you want to test input and output using your machine’s built-in hardware.\n### Pre-reqs for the mic-speaker example\n* [node-speaker](https://github.com/TooTallNate/node-speaker)\n* [node-record-lpcm16](https://github.com/gillesdemey/node-record-lpcm16)\n\nIf you are on macOS and are seeing `Illegal instruction: 4` when you complete your conversation, just use this command to re-install the speaker:\n```bash\n$ npm install speaker --mpg123-backend=openal\n```\n\n## Assistant Instance\nHere are the events and methods on the main instance.\n### `ready` event\nEmitted once your OAuth2 credentials have been saved. It's safe to start a conversation now.\n### `start()`\nThis is called anytime after you've got a `ready` event.\n### `started` event {Conversation}\nYou'll get this right after a call to `start` and it returns a `conversation` instance (see below).\n### `error` event\nIf things go funky, this will be called.\n\n## Conversation Instance\nAfter a call to `start` you will get one of these back. Here are the events and methods that it supports:\n### `audio-out` event {Buffer}\nContains an audio buffer to use to pipe to a file or speaker.\n### `end-of-utterance` event\nEmitted once the server detects you are done speaking.\n### `transcription` event {String}\nContains the text that the server recognized from your voice.\n### `end()`\nSend this when the assistant is finished speaking\n### `ended` event {Error, Boolean}\nAfter a call to `end()` this will be emitted with an error and a boolean that will be `true` if you need to continue the conversation. This is basically your cue to call `start()` again.\n### `response` event {String}\nThis is only emitted when using IFTTT and I found it in the Python SDK, so I put it in here as well. Untested, but there all the same.\n\n[oauth]: https://developers.google.com/assistant/sdk/prototype/getting-started-other-platforms/config-dev-project-and-account\n",
+  "readmeFilename": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "git+https://endoplasmic@github.com/endoplasmic/google-assistant.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "0.1.3"
+}
