@@ -159,7 +159,7 @@ const handlers = {
     this.emit(':tell', this.t('STOP_MESSAGE'))
   },
   'Unhandled': function () {
-    var message = 'Say yes to continue, or no to end the game.'
+    var message = 'Ich habe dich leider nicht verstanden.'
     this.emit(':tell', message)
   }
 }
