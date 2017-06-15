@@ -69,6 +69,13 @@ function getMockedDate (offset) {
   return `${mockdate.getDate()}.${mockdate.getMonth() + 1}.${mockdate.getFullYear()}`
 }
 
+var states = {
+  AFTER_FIRST_QESTION: '_AFTER_FIRST_QESTION', // User is trying to guess the number.
+  STARTMODE: '_STARTMODE',
+  CHECK_IN_MODE: '_CHECK_IN_MODE',
+  NOTIFICATIONS: '_NOTIFICATIONS'
+}
+
 const languageStrings = {
   'de': {
     translation: {
@@ -107,6 +114,7 @@ const handlers = {
         return
       }
 
+      this.handler.state = states.STARTMODE
       this.emit(':ask', speechOutput, this.t('WELCOME_REPROMT'))
     })
   },
@@ -139,19 +147,6 @@ const handlers = {
   'AMAZON.YesIntent': function () {
     this.emit(':tell', 'Ok, danke.')
   },
-  'FlightListNextAll': function () {
-    const speechOutput = `Dein nächsten Flüge sind:${this.t('FLIGHTS').map((el, index, array) => {
-      let and = ''
-      if (index === 0 && array.length > 0) and = ' und '
-
-      return `${el.from} nach ${el.to} am ${el.date}${and}`
-    })}`
-    this.emit(':ask', `${speechOutput} ${this.t('FLIGHTS_FURTHER_ACTION')}`, this.t('CALL_ME'))
-  },
-  'FlightListNextOne': function () {
-    const speechOutput = `Dein nächster Flug ist von ${this.t('FLIGHTS')[0].from} nach ${this.t('FLIGHTS')[0].to} am ${this.t('FLIGHTS')[0].date}`
-    this.emit(':tell', speechOutput)
-  },
   'AMAZON.HelpIntent': function () {
     const speechOutput = this.t('HELP_MESSAGE')
     const reprompt = this.t('HELP_MESSAGE')
@@ -172,11 +167,96 @@ const handlers = {
   }
 }
 
+var startHandlers = Alexa.CreateStateHandler(states.STARTMODE, {
+  'NewSession': function () {
+    this.emit('NewSession') // Uses the handler in newSessionHandlers
+  },
+  'FlightListNextAll': function () {
+    const speechOutput = `Deine nächsten Flüge sind:${this.t('FLIGHTS').map((el, index, array) => {
+      let and = ''
+      if (index === 0 && array.length > 0) and = ' und '
+
+      return `${el.from} nach ${el.to} am ${el.date}${and}`
+    })}`
+    this.emit(':ask', `${speechOutput} ${this.t('FLIGHTS_FURTHER_ACTION')}`, this.t('CALL_ME'))
+  },
+  'FlightListNextOne': function () {
+    const speechOutput = `Dein nächster Flug ist von ${this.t('FLIGHTS')[0].from} nach ${this.t('FLIGHTS')[0].to} am ${this.t('FLIGHTS')[0].date}`
+    this.emit(':tell', speechOutput)
+  },
+  'AMAZON.YesIntent': function () {
+    this.attributes['flights'] = this.t('FLIGHTS')
+    this.emit(':ask', `Großartig.         Für welchen?`, 'Nenne mir die Position in der Liste')
+  },
+  'AMAZON.NUMBER': function () {
+    this.emit(':tell', 'Nummer')
+  },
+  'AMAZON.NoIntent': function () {
+    this.emit(':tell', 'Okay, melde dich aber gerne bei mir')
+  },
+  'AMAZON.HelpIntent': function () {
+    const speechOutput = this.t('HELP_MESSAGE')
+    const reprompt = this.t('HELP_MESSAGE')
+    this.emit(':ask', speechOutput, reprompt)
+  },
+  'AMAZON.CancelIntent': function () {
+    this.emit('SessionEndedRequest')
+  },
+  'AMAZON.StopIntent': function () {
+    this.emit('SessionEndedRequest')
+  },
+  'SessionEndedRequest': function () {
+    this.emit(':tell', this.t('STOP_MESSAGE'))
+  },
+  'Unhandled': function () {
+    this.handler.state = states.NOTIFICATIONS
+    var message = 'Okay. Ich checke dich für den ersten Flug ein. Soll ich dich bei Facebook automatisch benachrichtigen?'
+    this.emit(':ask', message)
+  }
+})
+
+var notificationHandlers = Alexa.CreateStateHandler(states.NOTIFICATIONS, {
+  'NewSession': function () {
+    this.emit('NewSession') // Uses the handler in newSessionHandlers
+  },
+  'AMAZON.YesIntent': function () {
+    const payload = JSON.stringify({ user: null })
+    postWebhook(null, payload, (err) => {
+      if (err) {
+        return
+      }
+
+      this.emit(':tell', 'Okay. Wir sehen uns bei Facebook. Auch da kannst du mit mir reden.')
+    })
+  },
+  'AMAZON.NoIntent': function () {
+    this.emit(':tell', 'Okay, melde dich aber gerne bei mir.')
+  },
+  'AMAZON.HelpIntent': function () {
+    const speechOutput = this.t('HELP_MESSAGE')
+    const reprompt = this.t('HELP_MESSAGE')
+    this.emit(':ask', speechOutput, reprompt)
+  },
+  'AMAZON.CancelIntent': function () {
+    this.emit('SessionEndedRequest')
+  },
+  'AMAZON.StopIntent': function () {
+    this.emit('SessionEndedRequest')
+  },
+  'SessionEndedRequest': function () {
+    this.emit(':tell', this.t('STOP_MESSAGE'))
+  },
+  'Unhandled': function () {
+    var message = 'Ich habe dich leider nicht verstanden.'
+    this.emit(':tell', message)
+  }
+})
+
 exports.handler = function (event, context) {
   const alexa = Alexa.handler(event, context)
   alexa.APP_ID = APP_ID
     // To enable string internationalization (i18n) features, set a resources object.
   alexa.resources = languageStrings
-  alexa.registerHandlers(handlers)
+  alexa.registerHandlers(handlers, startHandlers, notificationHandlers)
   alexa.execute()
 }
